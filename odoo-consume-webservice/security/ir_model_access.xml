@@ -1,0 +1,79 @@
+<odoo>
+<!--    &lt;!&ndash;Accesos&ndash;&gt;-->
+<!--    &lt;!&ndash;Guias&ndash;&gt;-->
+<!--    <record id="model_access_trip_guias" model="ir.model.access">-->
+<!--        <field name="name">model.access.trip.guias</field>-->
+<!--        <field name="model_id" ref="trips_management_test.model_control_guias"></field>-->
+<!--        <field name="group_id" ref="base.group_system"></field>-->
+<!--        <field name="perm_create" eval="1"></field>-->
+<!--        <field name="perm_write" eval="1"></field>-->
+<!--        <field name="perm_unlink" eval="1"></field>-->
+<!--        <field name="perm_read" eval="1"></field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;Itinerarios&ndash;&gt;-->
+<!--    <record id="model_access_trip_itinerary" model="ir.model.access">-->
+<!--        <field name="name">model.access.trip.itinerary</field>-->
+<!--        <field name="model_id" ref="trips_management_test.model_trip_itinerary"></field>-->
+<!--        <field name="group_id" ref="base.group_system"></field>-->
+<!--        <field name="perm_create" eval="1"></field>-->
+<!--        <field name="perm_write" eval="1"></field>-->
+<!--        <field name="perm_unlink" eval="1"></field>-->
+<!--        <field name="perm_read" eval="1"></field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;Secciones&ndash;&gt;-->
+<!--    <record id="model_access_trip_section" model="ir.model.access">-->
+<!--        <field name="name">model.access.trip.section</field>-->
+<!--        <field name="model_id" ref="trips_management_test.model_trip_section"></field>-->
+<!--        <field name="group_id" ref="base.group_system"></field>-->
+<!--        <field name="perm_create" eval="1"></field>-->
+<!--        <field name="perm_write" eval="1"></field>-->
+<!--        <field name="perm_unlink" eval="1"></field>-->
+<!--        <field name="perm_read" eval="1"></field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;Abastecimientos&ndash;&gt;-->
+<!--&lt;!&ndash;    <record id="model_access_trip_sourcing" model="ir.model.access">&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="name">model.access.trip.sourcing</field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="model_id" ref="trips_management_test.model_trip_sourcing"></field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="group_id" ref="base.group_system"></field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="perm_create" eval="1"></field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="perm_write" eval="1"></field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="perm_unlink" eval="1"></field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="perm_read" eval="1"></field>&ndash;&gt;-->
+<!--&lt;!&ndash;    </record>&ndash;&gt;-->
+
+<!--    &lt;!&ndash;Viajes&ndash;&gt;-->
+<!--    <record id="model_access_trip_trip" model="ir.model.access">-->
+<!--        <field name="name">model.access.trip.trip</field>-->
+<!--        <field name="model_id" ref="trips_management_test.model_trip_trip"></field>-->
+<!--        <field name="group_id" ref="base.group_system"></field>-->
+<!--        <field name="perm_create" eval="1"></field>-->
+<!--        <field name="perm_write" eval="1"></field>-->
+<!--        <field name="perm_unlink" eval="1"></field>-->
+<!--        <field name="perm_read" eval="1"></field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;Pago Choferes&ndash;&gt;-->
+<!--    <record id="model_access_trip_driver_payment" model="ir.model.access">-->
+<!--        <field name="name">model.access.trip.driver.payment</field>-->
+<!--        <field name="model_id" ref="trips_management_test.model_trip_driver_payment"></field>-->
+<!--        <field name="group_id" ref="base.group_system"></field>-->
+<!--        <field name="perm_create" eval="1"></field>-->
+<!--        <field name="perm_write" eval="1"></field>-->
+<!--        <field name="perm_unlink" eval="1"></field>-->
+<!--        <field name="perm_read" eval="1"></field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;Station&ndash;&gt;-->
+<!--    <record id="model_access_trip_sourcing_station" model="ir.model.access">-->
+<!--        <field name="name">model.access.trip.sourcing.station</field>-->
+<!--        <field name="model_id" ref="trips_management_test.model_trip_station"></field>-->
+<!--        <field name="group_id" ref="base.group_system"></field>-->
+<!--        <field name="perm_create" eval="1"></field>-->
+<!--        <field name="perm_write" eval="1"></field>-->
+<!--        <field name="perm_unlink" eval="1"></field>-->
+<!--        <field name="perm_read" eval="1"></field>-->
+<!--    </record>-->
+</odoo>
