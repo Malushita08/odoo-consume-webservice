@@ -23,6 +23,6 @@
 
     # always loaded
     'data': [
-        'views/trip_stork.xml',
+        'views/kds_web_service.xml',
     ],
 }

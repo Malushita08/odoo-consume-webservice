@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-from . import trip_stork
+from . import kds_web_service

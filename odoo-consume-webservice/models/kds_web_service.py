@@ -43,8 +43,8 @@ class stork(models.Model):
 
             self.create({
                 'partner_id': client.id,
-                'order_line': [(0, 0, {'product_id': 1, 'product_uom_qty': 1, 'price_unit': 100}),
-                               (0, 0, {'product_id': 2, 'product_uom_qty': 2, 'price_unit': 100})],
+                # 'order_line': [(0, 0, {'product_id': 1, 'product_uom_qty': 1, 'price_unit': 100}),
+                #                (0, 0, {'product_id': 2, 'product_uom_qty': 2, 'price_unit': 100})],
                 'date_order': object['fecha'],
                 # 'pricelist_id': 1,
                 # 'currency_id': 1,
