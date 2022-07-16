@@ -1,5 +1,4 @@
 from odoo import models, fields
-import requests
 
 
 class kds_sale_order_line(models.Model):

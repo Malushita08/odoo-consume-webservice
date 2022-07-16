@@ -1,0 +1,48 @@
+<odoo>
+    <!--Add a setting visual editor for change the kds_web_service parameters-->
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale.order</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="directory_creator" id="mkdir" string="Dir creator"
+                     data-key="mkdir">
+                    <h2>Configuracion de valores del modulo</h2>
+                    <group string="Basic information">
+                        <field name="webservice_url"/>
+                    </group>
+                    <group string="web information">
+                        <field name="webservice_token"/>
+                    </group>
+                </div>
+            </xpath>
+        </field>
+    </record>
+<!--        <record id="res_config_settings_view_form" model="ir.ui.view">-->
+<!--            <field name="name">res.config.settings.view.form.inherit.sale.order</field>-->
+<!--            <field name="model">res.config.settings</field>-->
+<!--            <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//div[@id='inter_company']" position="before">-->
+<!--                    <h2>KDS Web Service Configuration</h2>-->
+<!--                    <div class="row mt16 o_settings_container" id="server_general_settings">-->
+<!--                        <div class="col-12 col-lg-6 o_setting_box">-->
+<!--                            <div class="o_setting_left_pane">-->
+<!--                                <field name="Web Service URL"/>-->
+<!--                            </div>-->
+<!--                            <div class="o_setting_right_pane">-->
+<!--                                <label for="webservice_url" string="URL"/>-->
+<!--                                <div class="content-group">-->
+<!--                                    <div class="mt16">-->
+<!--                                        <field name="webservice_url" class="o_light_label"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+</odoo>

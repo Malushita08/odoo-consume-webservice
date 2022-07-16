@@ -1,5 +1,4 @@
 from odoo import models, fields
-import requests
 
 
 class kds_res_partner(models.Model):

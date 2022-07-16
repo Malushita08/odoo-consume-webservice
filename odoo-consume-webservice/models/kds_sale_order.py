@@ -15,11 +15,14 @@ class kds_sale_order(models.Model):
 
     def call_web_service(self):
         # Consult the web service
-        api_url = "http://190.85.232.41/svc/wctdm.svc/getData/"
+
+        api_url = self.env.company.webservice_url
+        # api_url = "http://190.85.232.41/svc/wctdm.svc/getData/"
         body = {
             "Data": {
                 "consulta": "reporteventa",
-                "token": "ODhmNDk5ZTQzN2YyOTAyZGE5NTc3ZTgyMzY3NDRhM2I=",
+                "token": self.env.company.webservice_token,
+                # "token": "ODhmNDk5ZTQzN2YyOTAyZGE5NTc3ZTgyMzY3NDRhM2I=",
                 "accion": "R",
                 "Valores": [
                     "2022-06-14",

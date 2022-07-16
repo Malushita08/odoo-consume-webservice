@@ -25,5 +25,6 @@
     'data': [
         'views/kds_web_service.xml',
         'views/kds_planned_action.xml',
+        'views/kds_config_settings_company.xml',
     ],
 }
