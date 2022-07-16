@@ -1,0 +1,30 @@
+<odoo>
+    <!--Personalizamos vista de cotizaciones/compras-->
+    <record id="consume_web_service" model="ir.ui.view">
+        <field name="name">consume.web.service.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!--Agregamos el botón-->
+            <xpath expr="//sheet/div[1]/button[1]" position="before">
+                <button name="call_web_service"
+                        type="object"
+                        class="oe_stat_button"
+                        string="WEB Service">
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Vista respuesta al presionar el botón-->
+    <record id="trip_stork_service_form" model="ir.ui.view">
+        <field name="name">trip.stork.service.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <form string="Lala">
+                <sheet>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

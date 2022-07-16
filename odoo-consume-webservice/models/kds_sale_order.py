@@ -33,12 +33,14 @@ class kds_sale_order(models.Model):
         }
         response = requests.post(api_url, json=body)
 
+        new_sale_orders = []
+
         for object in response.json():
             # Check if the client(res.partner) already exists and create it if not
             client = self.env['res.partner'].search([('kds_id_cliente', '=', object['id_cliente'])])
             if not client:
                 client_data = {
-                    'name': ' ',
+                    'name': object['id_cliente'],
                     'kds_id_cliente': object['id_cliente'],
                     'kds_cliente_nuevo': object['ClienteNuevo'],
                     'kds_estado_cliente': object['EstadoCliente']
@@ -49,8 +51,9 @@ class kds_sale_order(models.Model):
             product = self.env['product.product'].search([('kds_id_producto', '=', object['id_producto'])])
             if not product:
                 product_data = {
-                    'name': ' ',
-                    'kds_id_producto': object['id_producto']
+                    'name': object['id_producto'],
+                    'kds_id_producto': object['id_producto'],
+                    'detailed_type': 'product'
                 }
                 product = self.env['product.product'].create(product_data)
 
@@ -70,6 +73,7 @@ class kds_sale_order(models.Model):
                     # 'team_id': 1
                 }
                 sale_order = self.create(sale_order_data)
+                new_sale_orders.append(sale_order)
 
             # Check if the sale.order_line already exists and create it if not
             sale_order_line = self.env['sale.order.line'].search([
@@ -85,6 +89,16 @@ class kds_sale_order(models.Model):
                     'price_total': object['monto']
                 }
                 sale_order_line = self.env['sale.order.line'].create(sale_order_line_data)
+
+        # Confirm all the sale_orders and create their stock movement
+        for sale_order in new_sale_orders:
+            sale_order.action_confirm()
+            for picking in sale_order.picking_ids:
+                picking.action_assign()
+                picking.action_confirm()
+                for mv in picking.move_ids_without_package:
+                    mv.quantity_done = mv.product_uom_qty
+                picking.button_validate()
 
         # Devolvemos un formulario vacio al presionar el botón
         view_form = self.env['ir.ui.view'].search([('name', '=', 'trip.stork.service.view.form')])
