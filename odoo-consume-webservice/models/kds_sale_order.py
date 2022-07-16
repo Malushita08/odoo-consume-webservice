@@ -34,7 +34,7 @@ class kds_sale_order(models.Model):
         response = requests.post(api_url, json=body)
 
         for object in response.json():
-            # Check if the client(res.partner) already exists
+            # Check if the client(res.partner) already exists and create it if not
             client = self.env['res.partner'].search([('kds_id_cliente', '=', object['id_cliente'])])
             if not client:
                 client_data = {
@@ -45,7 +45,7 @@ class kds_sale_order(models.Model):
                 }
                 client = self.env['res.partner'].create(client_data)
 
-            # Check if the product already exists
+            # Check if the product already exists and create it if not
             product = self.env['product.product'].search([('kds_id_producto', '=', object['id_producto'])])
             if not product:
                 product_data = {
@@ -54,14 +54,12 @@ class kds_sale_order(models.Model):
                 }
                 product = self.env['product.product'].create(product_data)
 
-            # Check if the sale order already exists
+            # Check if the sale order already exists and create it if not
             sale_order = self.search([
                 ('kds_serie_nota', '=', object['serie_nota']),
                 ('kds_no_nota', '=', object['no_nota']),
             ])
-
             if not sale_order:
-                # Create sale.order
                 sale_order_data = {
                     'partner_id': client.id,
                     'date_order': object['fecha'],
@@ -73,7 +71,7 @@ class kds_sale_order(models.Model):
                 }
                 sale_order = self.create(sale_order_data)
 
-            # Check if the sale.order_line already exists
+            # Check if the sale.order_line already exists and create it if not
             sale_order_line = self.env['sale.order.line'].search([
                 ('order_id', '=', sale_order.id),
                 ('product_id', '=', product.id)])
@@ -86,7 +84,7 @@ class kds_sale_order(models.Model):
                     'price_unit': object['precio'],
                     'price_total': object['monto']
                 }
-            sale_order_line = self.env['sale.order.line'].create(sale_order_line_data)
+                sale_order_line = self.env['sale.order.line'].create(sale_order_line_data)
 
         # Devolvemos un formulario vacio al presionar el botón
         view_form = self.env['ir.ui.view'].search([('name', '=', 'trip.stork.service.view.form')])
