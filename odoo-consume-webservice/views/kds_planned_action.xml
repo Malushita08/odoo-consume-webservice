@@ -1,30 +1,13 @@
 <odoo>
-    <!--Personalizamos vista de cotizaciones/compras-->
-    <record id="consume_web_service" model="ir.ui.view">
-        <field name="name">consume.web.service.view.form</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="arch" type="xml">
-            <!--Agregamos el botón-->
-            <xpath expr="//sheet/div[1]/button[1]" position="before">
-                <button name="call_web_service"
-                        type="object"
-                        class="oe_stat_button"
-                        string="WEB Service">
-                </button>
-            </xpath>
-        </field>
-    </record>
-
-    <!--Vista respuesta al presionar el botón-->
-    <record id="trip_stork_service_form" model="ir.ui.view">
-        <field name="name">trip.stork.service.view.form</field>
-        <field name="model">sale.order</field>
-        <field name="arch" type="xml">
-            <form string="Lala">
-                <sheet>
-                </sheet>
-            </form>
-        </field>
+    <!--Create a scheduled action that consumes the web service and saves its data -->
+    <record id="ir_cron_call_kds_web_service" model="ir.cron">
+        <field name="name">Consume web service actions</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="code">model.call_web_service()</field>
+        <field name="state">code</field>
     </record>
 </odoo>

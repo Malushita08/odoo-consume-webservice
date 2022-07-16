@@ -24,5 +24,6 @@
     # always loaded
     'data': [
         'views/kds_web_service.xml',
+        'views/kds_planned_action.xml',
     ],
 }
