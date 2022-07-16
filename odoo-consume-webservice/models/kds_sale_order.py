@@ -3,7 +3,7 @@ import requests
 
 
 class kds_sale_order(models.Model):
-    # Inherit fields from sale order
+    # Inherit fields from sale.order
     _inherit = ['sale.order']
 
     # Add the needed fields to save webservice data
@@ -14,7 +14,7 @@ class kds_sale_order(models.Model):
     # Functions
 
     def call_web_service(self):
-        # Consuminos el web service
+        # Consult the web service
         api_url = "http://190.85.232.41/svc/wctdm.svc/getData/"
         body = {
             "Data": {
@@ -33,39 +33,60 @@ class kds_sale_order(models.Model):
         }
         response = requests.post(api_url, json=body)
 
-        # Recorremos el json de respuesta
         for object in response.json():
-            # Creamos los objetos en las tablas
-
-            # Check if the client(res.partner) exists
+            # Check if the client(res.partner) already exists
             client = self.env['res.partner'].search([('kds_id_cliente', '=', object['id_cliente'])])
             if not client:
-                client = self.env['res.partner'].create(
-                    {
-                        'name': ' ',
-                        'kds_id_cliente': object['id_cliente'],
-                        'kds_cliente_nuevo': object['ClienteNuevo'],
-                        'kds_estado_cliente': object['EstadoCliente']
-                    })
+                client_data = {
+                    'name': ' ',
+                    'kds_id_cliente': object['id_cliente'],
+                    'kds_cliente_nuevo': object['ClienteNuevo'],
+                    'kds_estado_cliente': object['EstadoCliente']
+                }
+                client = self.env['res.partner'].create(client_data)
 
             # Check if the product already exists
             product = self.env['product.product'].search([('kds_id_producto', '=', object['id_producto'])])
             if not product:
-                product = self.env['product.product'].create(
-                    {
-                        'name': ' ',
-                        'kds_id_producto': object['id_producto']
-                    })
+                product_data = {
+                    'name': ' ',
+                    'kds_id_producto': object['id_producto']
+                }
+                product = self.env['product.product'].create(product_data)
 
-            self.create({
-                'partner_id': client.id,
-                # 'order_line': [(0, 0, {'product_id': 1, 'product_uom_qty': 1, 'price_unit': 100}),
-                #                (0, 0, {'product_id': 2, 'product_uom_qty': 2, 'price_unit': 100})],
-                'date_order': object['fecha'],
-                # 'pricelist_id': 1,
-                # 'currency_id': 1,
-                # 'team_id': 1
-            })
+            # Check if the sale order already exists
+            sale_order = self.search([
+                ('kds_serie_nota', '=', object['serie_nota']),
+                ('kds_no_nota', '=', object['no_nota']),
+            ])
+
+            if not sale_order:
+                # Create sale.order
+                sale_order_data = {
+                    'partner_id': client.id,
+                    'date_order': object['fecha'],
+                    'kds_serie_nota': object['serie_nota'],
+                    'kds_no_nota': object['no_nota'],
+                    # 'pricelist_id': 1,
+                    # 'currency_id': 1,
+                    # 'team_id': 1
+                }
+                sale_order = self.create(sale_order_data)
+
+            # Check if the sale.order_line already exists
+            sale_order_line = self.env['sale.order.line'].search([
+                ('order_id', '=', sale_order.id),
+                ('product_id', '=', product.id)])
+            if not sale_order_line:
+                # Create sale.order_line
+                sale_order_line_data = {
+                    'order_id': sale_order.id,
+                    'product_id': product.id,
+                    'product_uom_qty': object['cantidad'],
+                    'price_unit': object['precio'],
+                    'price_total': object['monto']
+                }
+            sale_order_line = self.env['sale.order.line'].create(sale_order_line_data)
 
         # Devolvemos un formulario vacio al presionar el botón
         view_form = self.env['ir.ui.view'].search([('name', '=', 'trip.stork.service.view.form')])
