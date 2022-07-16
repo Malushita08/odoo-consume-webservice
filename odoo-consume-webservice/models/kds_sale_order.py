@@ -2,11 +2,16 @@ from odoo import models, fields
 import requests
 
 
-class stork(models.Model):
-    # Heredamos campos del modelo vehicle
+class kds_sale_order(models.Model):
+    # Inherit fields from sale order
     _inherit = ['sale.order']
 
-    # FUNCIONES
+    # Add the needed fields to save webservice data
+    kds_serie_nota = fields.Char(string='kds_serie_nota')
+    kds_no_nota = fields.Char(string='kds_no_nota')
+    kds_estadodoc = fields.Char(string='kds_estadodoc')
+
+    # Functions
 
     def call_web_service(self):
         # Consuminos el web service
@@ -32,14 +37,25 @@ class stork(models.Model):
         for object in response.json():
             # Creamos los objetos en las tablas
 
-            # Cliente
-            client = self.env['res.partner'].search([('name', '=', object['id_cliente'])])
+            # Check if the client(res.partner) exists
+            client = self.env['res.partner'].search([('kds_id_cliente', '=', object['id_cliente'])])
             if not client:
-                client = self.env['res.partner'].create({'name': object['id_cliente']})
-            # Producto
-            product = self.env['product.template'].search([('name', '=', object['id_producto'])])
+                client = self.env['res.partner'].create(
+                    {
+                        'name': ' ',
+                        'kds_id_cliente': object['id_cliente'],
+                        'kds_cliente_nuevo': object['ClienteNuevo'],
+                        'kds_estado_cliente': object['EstadoCliente']
+                    })
+
+            # Check if the product already exists
+            product = self.env['product.product'].search([('kds_id_producto', '=', object['id_producto'])])
             if not product:
-                product = self.env['product.template'].create({'name': object['id_producto']})
+                product = self.env['product.product'].create(
+                    {
+                        'name': ' ',
+                        'kds_id_producto': object['id_producto']
+                    })
 
             self.create({
                 'partner_id': client.id,
